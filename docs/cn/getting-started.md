@@ -33,8 +33,9 @@ ValueCell 提供两种使用方式：
 |------|------|----------|
 | 后端 | Python 3.12+、FastAPI、uvicorn | `uv` |
 | 前端 | React Router v7、TypeScript、Vite | `bun` |
+| 桌面打包 | **Tauri v2**（macOS / Windows） | Cargo |
 | 数据存储 | SQLite、LanceDB | — |
-| Agent 框架 | Agno、A2A 协议 | — |
+| Agent 框架 | Agno（Agent 构建）、A2A 协议（通信） | — |
 
 ### 2.2 系统要求
 
@@ -310,6 +311,16 @@ AGENT_DEBUG_MODE=true
 5. 确认对话结束后能看到完整内容
 
 如果这五步都能完成，说明系统核心链路正常。
+
+---
+
+## 7.5 验证后的深入探索
+
+完成基本验证后，如果你想更深入地了解系统工作方式，可以尝试以下操作：
+
+1. **开启调试模式**：在 `.env` 中设置 `AGENT_DEBUG_MODE=true`，再发起一次对话，观察终端中的完整日志
+2. **追踪一条请求**：观察后端日志，尝试对应"请求接入 → Super Agent 分流 → 规划/直通 → 执行 → 事件返回"这几个阶段
+3. **阅读一个 Agent 实现**：打开 `python/valuecell/agents/news_agent/core.py`，从 `stream()` 方法开始读
 
 ---
 

@@ -212,6 +212,25 @@ FastAPI 应用工厂。**这是理解后端初始化行为的关键文件。**
 
 Super Agent 很薄，价值不在于"做所有事"，而在于做第一层分流判断。
 
+### 3.8 对话存储：`python/valuecell/core/conversation/`
+
+| 文件 | 职责 |
+|------|------|
+| `conversation_store.py` | 会话的创建、查询、状态管理（active / waiting_input） |
+| `item_store.py` | 消息项的 CRUD、按时间排序、获取最新 item |
+
+这两个文件支撑了系统的持久化和恢复能力。阅读时建议先看接口定义（`add` / `get` / `query`），再关注 SQLite 实现细节。
+
+### 3.9 数据适配器：市场数据管线
+
+市场数据不直接在 `core/` 中，而是在 `server/api/app.py` 启动时初始化。适配器管理器负责：
+
+- **Yahoo Finance**（`yfinance`）：美股、港股实时和历史数据
+- **AKShare**（`akshare`）：A 股、国内期货等
+- **BaoStock**（`baostock`）：A 股历史 K 线
+
+Agent 通过统一接口查询市场数据，不需要关心底层适配器差异。
+
 ---
 
 ## 4. Agent 相关代码导读
